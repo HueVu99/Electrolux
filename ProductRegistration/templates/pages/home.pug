@@ -1,0 +1,16 @@
+extends ../layout/root.pug
+block page-info
+	- var pageTitle = "Home page";
+	- var pageClass = "home-page";
+block critical-css
+	//- //inject-style-critical critical/critical-home-page.css
+block module-css
+	//cssfiles:critical-home-page.css,home-page.css,register-product-block.css,benefits-block.css,extended-warranty.css,service-support.css
+	//inject-style-modules:css
+	//endinject
+block body
+	include ../modules/second-nav.pug
+	include ../modules/register-product-block.pug
+	include ../modules/benefits-block.pug
+	include ../modules/warranty-block.pug
+	include ../modules/service-support.pug

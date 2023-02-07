@@ -1,0 +1,35 @@
+//- Using background image
+
+//- .container
+//-   .extended-warranty(style='background-image: url(/dist/ProductRegistration/electrolux/assets/images/extended-warranty-large.png)')
+//-     .extended-warranty__header(style='background-image: url(/dist/ProductRegistration/electrolux/assets/images/extended-warranty.png)')
+//-       .extended-warranty__wrapper
+//-         img(src='/dist/ProductRegistration/electrolux/assets/icons/extended-warranty-icon.svg' alt='')
+//-         p.extended-warranty__wrapper-text Extended Warranty
+//-     .extended-warranty__body
+//-       h3.extended-warranty__body-title We give you longer warranty coverage so you can enjoy your appliance more.
+//-       p.fw-600 Benefit include:
+//-       ul.extended-warranty__benefit
+//-         li Check your warranties
+//-         li Get instant help
+//-         li Shop for accessories that match your appliance
+
+
+//- Using img 
+
+.container
+    .extended-warranty
+        //- img.extended-warranty__img-large(src='/dist/ProductRegistration/electrolux/assets/images/extended-warranty-large.png' alt='')
+        .extended-warranty__wrapper
+            .extended-warranty__header
+                img.extended-warranty__img-header(src='/Electrolux/ProductRegistration/styles/core/assets/images/fe/extended-warranty.png' alt='')
+                .extended-warranty__header-wrapper
+                    img(src='/Electrolux/ProductRegistration/styles/core/assets/images/fe/extended-warranty-icon.svg' alt='')
+                    p.extended-warranty__wrapper-text Extended Warranty
+            .extended-warranty__body
+                h3.extended-warranty__body-title We give you longer warranty coverage so you can enjoy your appliance more.
+                p.fw-600 Benefit include:
+                ul.extended-warranty__benefit
+                    li Check your warranties
+                    li Get instant help
+                    li Shop for accessories that match your appliance

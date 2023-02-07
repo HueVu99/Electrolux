@@ -1,0 +1,185 @@
+
+<div class="section section--inset register-product-block">
+  <div class="container">
+    <div class="section__head">
+      <div class="section__head-wrap">
+        <h2 class="section__title">Register your product</h2>
+        <div class="section__summary">Register now for easy access to manuals, purchase information, warranties and service bookings - should you ever need them. Registering your product means we can contact you in the event of product updates and safety notices </div>
+      </div>
+    </div>
+    <div id="registerProduct" data-component="registerProduct" pageId="24">
+      <div class="step">
+        <div class="step__wrap">
+          <div class="step__item" :class="{'step__item--current': stepIndex==1, 'step__item--passed': stepIndex &gt; 1}">
+            <div class="step__number">1</div>
+            <div class="step__label">Your appliance</div>
+          </div>
+          <div class="step__item" :class="{'step__item--current': stepIndex==2, 'step__item--passed': stepIndex &gt; 2}">
+            <div class="step__number">2</div>
+            <div class="step__label">Your details</div>
+          </div>
+          <div class="step__item" :class="{'step__item--current': stepIndex==3, 'step__item--passed': stepIndex &gt; 3}">
+            <div class="step__number">3</div>
+            <div class="step__label">Complete</div>
+          </div>
+        </div>
+      </div>
+      <div class="step__contents" id="step__contents">
+        <!--start: step 1-->
+        <div class="step__content" id="step__content-1" step-index="1" :class="{ 'step__content--active': stepIndex==1}"><div class="c_select-product">
+<div class="c_select-product__result">
+<template v-if="selectedData.ProductModel">
+<div class="c_card c_product text-center mb-40 mb-md-0" ref="ref_product">
+<div class="c_card__control-top">
+<button class="c_card__remove js_card__remove" v-on:click="removeProduct">
+<i class="c_icon c_icon--clear-circle"></i>
+</button>
+</div>
+<div class="c_card__img">
+<img :src="selectedData.ImageSrc" :srcset="selectedData.ImageSrcSet" :alt="selectedData.ProductName" sizes="(min-width: 576px) 120px , 120px">
+</div>
+<div class="c_card__content">
+<h3 class="c_card__title">{{ selectedData.ProductName }}</h3>
+<div class="c_product__code">Model code: <strong>{{ selectedData.ProductModel }}</strong></div>
+<div class="c_product__number">Product number code: <strong>{{ selectedData.ProductCode && selectedData.ProductCode.length > 0 ? selectedData.ProductCode:'N/A' }}</strong></div>
+</div>
+<div class="c_card__foot"> 
+<button class="c_btn c_btn--primary c_btn--block" v-on:click="registerProduct">Register this product</button>
+</div>
+</div>
+</template>
+<template v-else>
+<div class="c_qrcode d-none d-md-block"> 
+<div class="c_qrcode-control">
+<img src="/Electrolux/ProductRegistration/styles/themes/electrolux/au/assets/icons/qr-code-pc.svg" alt="Using your phone then scan QR code to register product." width="60" height="60">
+</div>
+<h3>Using your phone then scan QR code to register product.</h3>
+<a class="text-sm" href="#where-to-find-qr-code" @click="onOpenSlide('where-to-find-qr-code')">How do I find QR Code on my product?</a>
+</div>
+</template>
+<div class="c_qrcode d-md-none">
+<h3>To get started, scan QR code by click on button bellow.</h3>
+<label class="c_qrcode-control">
+<input type="file" accept="image/*" capture="camera">
+<img src="/Electrolux/ProductRegistration/styles/themes/electrolux/au/assets/icons/qr-code.svg" alt="To get started, scan QR code by click on button bellow." width="60" height="60">
+</label>
+<a class="text-sm" href="#where-to-find-qr-code" @click="onOpenSlide('where-to-find-qr-code')">How do I find QR Code on my product?</a>
+</div>
+</div>
+<div class="c_select-product__divider">
+<div class="c_select-product__divider-text" :class="{ 'd-md-none': selectedData.ProductModel}">OR</div>
+</div>
+<div class="c_select-product__form">
+<h3>To get started, input model code (product number) on your appliance</h3>
+<div class="c_search" v-click-outside="onClose">
+<div class="c_search__form">
+<input class="c_form__control" type="text" @focus="inputFocus(searchQuery)" v-on:keyup.enter="inputEnter" v-model="searchQuery" placeholder="Model code, eg: EWF1102">
+<button class="c_search__btn-clear js_search__btn-clear" :class="{ 'c_search__btn-clear--active': searchQuery.length > 0}" v-on:click="clearSearch"><i class="c_icon c_icon--clear"></i></button>
+<button class="c_search__btn js_search__btn" v-on:click="getSuggestion">
+<svg class="c_icon c_icon--spinner c_search__icon" viewBox="0 0 37 37" v-if="loadingSuggestion">
+<use xlink:href="#spinner"></use>
+</svg>
+<svg class="c_icon c_search__icon" viewBox="0 0 20 20" v-else>
+<use xlink:href="#search-icon"></use>
+</svg>
+</button>
+</div>
+<div class="c_search__result" :class="{ 'c_search__result--active': isShow}">
+<div class="c_search__item-list">
+<div class="c_loading" v-if="loadingSuggestion">
+<svg class="c_icon c_icon--spinner c_search__icon" viewBox="0 0 37 37">
+<use xlink:href="#spinner"></use>
+</svg>
+</div>
+<template v-else>
+<template v-if="searchDatas.length > 0">
+<div class="c_search__item" @click="selectProduct(searchData)" v-for="searchData, index in searchDatas" :key="index" :class="{ 'c_search__item--active': searchData.ProductModel===selectedData.ProductModel}">
+<div class="c_search__item-content">
+<div class="c_search__item-code" v-html="highlight(searchData.ProductCode) || highlight(searchData.ProductModel)"></div>
+<div class="c_search__item-name">{{ searchData.ProductName }}</div>
+</div>
+<div class="c_search__item-img">
+<img :src="searchData.ImageSrc" :srcset="searchData.ImageSrcSet" :alt="searchData.ProductName" width="56" height="56" sizes="(min-width: 992px) 56px , 56px">
+</div>
+</div>
+</template>
+<template v-else>
+<div class="c_search__nodata">
+<p>We couldn't find any products matching <strong>{{ searchQuery }}</strong></p>
+<template v-if="searchQuery.length > 2">
+<p><strong>Please check model code if incorrect. In case it’s exactly, you can <a href="#" v-on:click="proceedModalCode"> proceed to register this model code*</a></strong></p>
+<p class="text-sm">* Discountinued products can be removed in list but still applied our service support</p>
+</template>
+</div>
+</template>  
+</template>
+</div>
+</div>
+</div>
+<a class="text-sm" href="#where-to-find-pnc" v-on:click="onOpenSlide('where-to-find-pnc')">How do I find my model code (product number)?</a>
+</div>
+</div>
+        </div>
+        <!--end: step 1-->
+        <!--start: step 2-->
+        <div class="step__content" id="step__content-2" step-index="2" :class="{ 'step__content--active': stepIndex==2}">
+          <div class="step-detail">
+            <div class="step-detail__left">
+              <div class="step-detail__top">
+                <button class="c_btn c_btn--back" type="button" v-on:click="backStep">Back</button>
+                <button class="c_btn c_btn--link c-btn--show-info" type="button" v-on:click="showInfo"><template v-if="isShowInfo">Hide </template> Appliance info</button>
+              </div><template v-if="!!selectedData">
+<div class="c_card c_product c_product-info mb-40 mb-md-0" :class="{ 'c_product--active': isShowInfo}" ref="ref_product">
+<div class="c_card__img">
+<img :src="selectedData.ImageSrc!==''? selectedData.ImageSrc : '/dist/ProductRegistration/electrolux/assets/images/product-default.svg'" :srcset="selectedData.ImageSrcSet" :alt="selectedData.ProductName"  sizes="(min-width: 576px) 252px , 120px">
+</div>
+<div class="c_card__content">
+<div class="c_product__code">Model code: <strong>{{ selectedData.ProductModel }}</strong></div>
+<div class="c_product__number">Product number code: <strong>{{ selectedData.ProductCode && selectedData.ProductCode.length > 0 ? selectedData.ProductCode:'N/A' }}</strong></div>
+</div>
+</div>
+</template>
+            </div>
+            <div class="step-detail__right"><register-form :pageid="pageid" :formapi="formAPI" :listrow="listRow"></register-form></div>
+          </div>
+        </div>
+        <div class="step__content" id="step__content-3" step-index="3" :class="{ 'step__content--active': stepIndex==3}">
+          <div class="step-detail">
+            <div class="step-detail__left"><template v-if="registrationProduct.ModelNumber">
+<div class="c_card c_product mb-40 mb-md-0" ref="ref_product">
+<div class="c_card__img">
+<img :src="selectedData.ImageSrc!==''? selectedData.ImageSrc : '/dist/ProductRegistration/electrolux/assets/images/product-default.svg'" :srcset="selectedData.ImageSrcSet" :alt="selectedData.ProductName" sizes="(min-width: 576px) 252px , 120px">
+</div>
+<div class="c_card__content">
+<div class="c_product__code">Model code: <strong>{{ registrationProduct.ModelNumber }}</strong></div>
+<div class="c_product__number">Product number code: <strong>{{ registrationProduct.ProductCode }}</strong></div>
+<div class="c_product__serial" v-if="!!registrationProduct.SerialNumber">Serial number: <strong>{{ registrationProduct.SerialNumber }}</strong></div>
+<div class="c_product__date-purchase" v-if="registrationProduct.PurchasedDate">Date of Purchase: <strong>{{ registrationProduct.PurchasedDate }}</strong></div>
+</div>
+              <hr><div class="c_card__content">
+<div class="c_product__number" v-if="registrationProduct.LastName || registrationProduct.FirstName"><strong>{{ registrationProduct.FirstName }} {{ registrationProduct.LastName }}</strong></div>
+<div class="c_product__number" v-if="registrationProduct.Email">Email: <strong>{{ registrationProduct.Email }}</strong></div>
+<div class="c_product__number" v-if="registrationProduct.Mobile">Phone: <strong>{{ registrationProduct.Mobile }}</strong></div>
+</div>
+</div>
+</template>
+            </div>
+            <div class="step-detail__right">
+              <div class="c_complete text-center">
+                <div class="c_complete__icon"><svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="37" cy="37" r="36" stroke="#011E41" stroke-width="2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.6562 37.4437L23.125 34.3308L32.0446 42.3356L50.875 25.4365L54.3438 28.5495L32.0446 48.5615L19.6562 37.4437Z" fill="#011E41"/>
+</svg>
+                </div>
+                <h3 class="c_complete__title">{{registrationRes.title}}</h3>
+                <div class="c_complete__description">{{registrationRes.description}}</div>
+                <button class="c_btn c_btn--outline-primary c_btn--block" type="button" v-on:click="reRegistration">Register another appliance</button>
+              </div><service-support :datasupport="registrationRes.supports"></service-support>
+            </div>
+          </div>
+        </div>
+        <!--end: step 3-->
+      </div>
+    </div>
+  </div><div id="howDoIFind" data-component="howDoIFind"></div>
+</div>

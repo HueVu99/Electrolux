@@ -1,0 +1,99 @@
+.extended-warranty {
+  position: relative;
+}
+.extended-warranty__header {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  position: relative;
+}
+.extended-warranty__header picture {
+  width: 100%;
+}
+.extended-warranty__header-wrapper {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding-left: 17px;
+  height: 100%;
+  position: absolute;
+}
+@media screen and (min-width: 992px) {
+  .extended-warranty__header-wrapper {
+    position: static;
+    padding-left: 54px;
+    padding-top: 42px;
+  }
+}
+.extended-warranty__header-wrapper .extended-warranty__wrapper-text {
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 28px;
+  font-weight: 600;
+  margin: 0;
+  margin-left: 10px;
+}
+.extended-warranty__header .extended-warranty__img-header {
+  width: 100%;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .extended-warranty__header {
+    position: static;
+    flex-wrap: wrap;
+  }
+  .extended-warranty__header-wrapper .extended-warranty__wrapper-text {
+    font-size: 1.625rem;
+  }
+  .extended-warranty__header-wrapper img {
+    width: 54px;
+    height: 54px;
+  }
+  .extended-warranty__header .extended-warranty__img-header {
+    position: absolute;
+    z-index: -1;
+  }
+}
+.extended-warranty .extended-warranty__wrapper {
+  position: static;
+}
+.extended-warranty__body {
+  padding: 25px 20px 0;
+}
+@media screen and (min-width: 992px) {
+  .extended-warranty__body {
+    color: #fff;
+    width: 40%;
+    padding: 42px 0 42px 54px;
+  }
+  .extended-warranty__body-title {
+    color: #fff;
+  }
+}
+.extended-warranty__body-title {
+  font-size: 1.25rem;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+.extended-warranty__body .extended-warranty__benefit {
+  padding-left: 20px;
+}
+.extended-warranty__body .extended-warranty__benefit li:not(:last-child) {
+  margin-bottom: 15px;
+}
+.extended-warranty__img-large {
+  width: 100%;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .extended-warranty__img-large {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+/*# sourceMappingURL=../maps/modules/extended-warranty.css.map */
